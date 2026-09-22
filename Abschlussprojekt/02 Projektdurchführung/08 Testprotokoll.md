@@ -1,0 +1,143 @@
+# Testprotokoll – IST-Zustand
+
+## Nachweisstatus
+
+Die historischen Ergebnisse stammen aus übermittelten PowerShell-Ausgaben und Screenshots. Exakte Start-/Endzeiten fehlen. Sie werden nicht rückwirkend erfunden. Neu erfasste Zeitstempel gelten ausschließlich für die jeweilige Wiederholung und beruhen auf der Uhr des ausführenden Rechners.
+
+## 1. Historische Befunde
+
+Zeitpunkt für alle nachfolgenden Einträge: **nicht gesichert erfasst**.
+
+| ID | Quelle | Ziel / Prüfung | Beobachtetes Ergebnis | Einordnung |
+|---|---|---|---|---|
+| H01 | CL01 | DC01 Hostname, Standard-DNS | IPv4 und IPv6 aufgelöst, DNS 192.168.2.139 | DNS-Abfrage erfolgreich |
+| H02 | CL01 | DC01 Hostname, explizit 192.168.2.139 | Gleiche Adressen | DNS-Abfrage erfolgreich |
+| H03 | CL01 | AD-SRV-Abfrage an DC01 | DC01, Port 389 | DNS-Eintrag gefunden |
+| H04 | ADM01 | DC01 Hostname, Standard-DNS | IPv4 und IPv6 aufgelöst, DNS 192.168.2.139 | DNS-Abfrage erfolgreich |
+| H05 | ADM01 | AD-SRV-Abfrage an DC01 | DC01, Port 389 | DNS-Eintrag gefunden |
+| H06 | CL01 | DC01 TCP 53/88/389/445 | Alle True | TCP erreichbar; keine vollständige Dienstprüfung |
+| H07 | ADM01 | DC01 TCP 53/88/389/445 | Alle True | TCP erreichbar; keine vollständige Dienstprüfung |
+| H08 | CL01 und ADM01 | DC01 TCP 3389, ursprünglich | Beide False | RDP auf DC01 deaktiviert |
+| H09 | DC01 | RDP-Diagnose | TermService Running; kein Listener 3389; fDenyTSConnections=1 | Ursache des ursprünglichen RDP-Befundes |
+| H10 | CL01 | DC01 TCP 3389 nach Aktivierung | True | Vorbereitete IPv4-Referenz |
+| H11 | ADM01 | DC01 TCP 3389 nach Aktivierung | True | Vorbereitete IPv4-Referenz |
+| H12 | ADM01, adm.weber | RDP-Anmeldung auf DC01 | Erfolgreich | Damals direkte Mitgliedschaft in Domänen-Admins; kein Nachweis eingeschränkter Administration |
+| H13 | DC01 | Mitgliedschaften adm.weber nach Bereinigung | MemberOf nur GG_IT_Admins | Direkte Domänen-Adminmitgliedschaft entfernt; primäre Gruppe nicht in MemberOf |
+| H14 | adm.weber | Anmeldung auf ADM01 nach Rechteanpassung | Erfolgreich | Getesteter Remote-Anmeldeweg |
+| H15 | lschmidt | Anmeldung auf ADM01 | Anmeldemethode nicht zulässig | Getesteter Anmeldeweg abgewiesen; lokale/Remote-Verfahren noch getrennt bestätigen |
+
+## 2. Veränderungen während der Aufnahme
+
+1. Ursprünglicher Zustand: RDP auf DC01 deaktiviert.
+2. RDP auf DC01 für den Vergleichstest aktiviert; anschließend TCP 3389 von beiden Clients erreichbar.
+3. adm.weber aus Domänen-Admins entfernt.
+4. Anmelderechte für ADM01 angepasst und GG_IT_Admins zu dessen Remotedesktopbenutzern hinzugefügt.
+5. Positiver und negativer Anmeldetest auf ADM01 durchgeführt.
+
+Die Wiederholung erfasst diesen vorbereiteten Zustand. Der ursprüngliche RDP-Zustand wird dafür nicht wiederhergestellt. Keine Ergebnisse dieser Änderungen werden pfSense zugeschrieben.
+
+## 3. Wiederholung mit automatischen Zeitangaben
+
+Datei `IST-Nachweise.ps1` auf **CL01 und ADM01** ausführen. Das Skript:
+
+- erfasst Rechnername, Benutzer, Zeitbereich und Zeitzone;
+- protokolliert Netzwerkparameter und den Status der Windows-Zeitsynchronisation;
+- führt drei DNS-Abfragen aus und bewahrt deren Rohantworten auf;
+- prüft DC01 auf TCP 53, 88, 389, 445 und 3389;
+- speichert TCP-Ergebnisse einschließlich lokaler Quelladresse und Zeitstempeln in CSV;
+- verändert keine Netzwerk-, Benutzer- oder Firewallkonfiguration.
+
+Die DNS-Ausgaben werden manuell bewertet. Ein Prozess-Exitcode allein wird nicht als erfolgreicher DNS-Test gewertet. Die Uhrzeiten müssen anhand des erfassten Synchronisationsstatus auf Plausibilität geprüft werden.
+
+### Erwartete Ergebnisse der vorbereiteten Referenz
+
+| Test | Erwartung auf CL01 und ADM01 |
+|---|---|
+| Hostabfrage Standard-DNS | DC01 wird korrekt aufgelöst; tatsächlich verwendeten DNS dokumentieren |
+| Hostabfrage explizit an DC01 | DC01 wird korrekt aufgelöst |
+| AD-SRV-Abfrage | Verweis auf dc01.ad.projekt.test, Port 389 |
+| TCP 53/88/389/445/3389 | True gemäß zuletzt beobachtetem Zustand; Abweichungen untersuchen |
+
+Eine Wiederholung ist erst nach Sichtung der erzeugten Dateien als durchgeführt einzutragen.
+
+## 4. Manuelle Anmeldung mit Zeitnachweisen wiederholen
+
+Für jede Anmeldung einen eigenen Datensatz anlegen:
+
+| Test-ID | Start mit UTC-Offset | Ende mit UTC-Offset | Quelle | Ziel | Konto | Anmeldeweg | Erwartung | Ergebnis | Nachweisdatei |
+|---|---|---|---|---|---|---|---|---|---|
+| A01 | offen | offen | offen | ADM01 | PROJEKT\adm.weber | RDP / erweiterte Hyper-V-Sitzung genau angeben | Erlaubt | noch nicht wiederholt | offen |
+| A02 | offen | offen | offen | ADM01 | PROJEKT\lschmidt | gleicher Weg wie A01 | Abgewiesen | noch nicht wiederholt | offen |
+
+Vor und nach dem Versuch auf dem beobachtenden Rechner `[DateTimeOffset]::Now.ToString('o')` ausführen und zusammen mit dem Screenshot speichern. Der Name einer Screenshotdatei allein beweist keine genaue Testzeit. Für die lokale Anmeldung separate Testfälle über die Hyper-V-Basissitzung anlegen.
+
+## 5. Abschlusskriterien
+
+- [x] IST-Netzplan aus den vorhandenen Befunden erstellt.
+- [x] Historische Ergebnisse und Änderungen getrennt dokumentiert.
+- [ ] Host-Topologie mit Zeitangaben erneut erfasst.
+- [ ] Skript auf CL01 ausgeführt und Rohdaten geprüft.
+- [ ] Skript auf ADM01 ausgeführt und Rohdaten geprüft.
+- [ ] Uhren-/Synchronisationsstatus bewertet.
+- [ ] Anmeldetests mit Zeitangaben wiederholt und Nachweise zugeordnet.
+
+**Gesamtstatus: vorbereitet; genaue Testnachweise noch durch Ausführung zu vervollständigen.**
+
+## 6. Ausgewertete Wiederholungen vom 15.09.2026
+
+Quelle: übermittelte Skriptausgaben und separat angezeigte CSV-Ergebnisse. Beide Läufe erfolgten als PROJEKT\administrator. Alle Zeiten nach den jeweiligen VM-Uhren, mit UTC-Offset +02:00. Die Windows-Zeitdienste meldeten den VM IC Time Synchronization Provider und keine Warnung; die Host-Uhr wurde noch nicht unabhängig geprüft.
+
+| Quelle | Beginn | Ende | DNS | TCP 53/88/389/445/3389 |
+|---|---|---|---|---|
+| CL01 | 2026-09-15T17:33:31.0247364+02:00 | 2026-09-15T17:33:37.7847550+02:00 | D01–D03 erfolgreich | Alle True, Error leer |
+| ADM01 | 2026-09-15T17:38:10.1314963+02:00 | 2026-09-15T17:38:17.3018091+02:00 | D01–D03 erfolgreich | Alle True, Error leer |
+
+### Einzeltests
+
+Datum: 15.09.2026. Alle nachfolgenden Uhrzeiten: UTC+02:00.
+
+| Quelle | Test | Start | Ende | Ergebnis |
+|---|---|---|---|---|
+| CL01 | D01 Standard-DNS | 17:33:34.0578373 | 17:33:34.1320452 | DC01 IPv4/IPv6 aufgelöst |
+| CL01 | D02 expliziter DNS | 17:33:34.1320452 | 17:33:34.1605021 | DC01 IPv4/IPv6 aufgelöst |
+| CL01 | D03 AD-SRV | 17:33:34.1605021 | 17:33:34.2121808 | DC01, Port 389 |
+| CL01 | TCP-53 | 17:33:34.2121808 | 17:33:35.7696951 | True |
+| CL01 | TCP-88 | 17:33:35.7743453 | 17:33:36.2975788 | True |
+| CL01 | TCP-389 | 17:33:36.2975788 | 17:33:36.8077573 | True |
+| CL01 | TCP-445 | 17:33:36.8077573 | 17:33:37.2765280 | True |
+| CL01 | TCP-3389 | 17:33:37.2765280 | 17:33:37.7468689 | True |
+| ADM01 | D01 Standard-DNS | 17:38:13.3534702 | 17:38:13.3987483 | DC01 IPv4/IPv6 aufgelöst |
+| ADM01 | D02 expliziter DNS | 17:38:13.3987483 | 17:38:13.4243982 | DC01 IPv4/IPv6 aufgelöst |
+| ADM01 | D03 AD-SRV | 17:38:13.4243982 | 17:38:13.4469133 | DC01, Port 389 |
+| ADM01 | TCP-53 | 17:38:13.4489201 | 17:38:15.0878931 | True |
+| ADM01 | TCP-88 | 17:38:15.0919022 | 17:38:15.6190760 | True |
+| ADM01 | TCP-389 | 17:38:15.6190760 | 17:38:16.1390989 | True |
+| ADM01 | TCP-445 | 17:38:16.1390989 | 17:38:16.6970714 | True |
+| ADM01 | TCP-3389 | 17:38:16.6970714 | 17:38:17.2299356 | True |
+
+TCP-Ziel in allen Fällen: 192.168.2.139. Die Zeitintervalle beschreiben den Ablauf der Prüfaufrufe, keine reinen Netzwerk-Latenzmessungen. Die Anzahl der Nachkommastellen ist keine Aussage über die Genauigkeit der Uhren.
+
+### Rohdateien auf den VMs
+
+- CL01: `C:\Users\Administrator\Documents\IST-CL01-20260915-173330`
+- ADM01: `C:\Users\Administrator\Documents\IST-ADM01-20260915-173809`
+- Jeweils: `Rohprotokoll.txt` und `TCP-Ergebnisse.csv`.
+
+Die Dateien sind noch in den Projekt-Nachweisordner zu übertragen. Bislang wurden ihre Inhalte über Konsolenausgaben übermittelt. Im ursprünglichen Skript wurde SourceAddress als Objekttext serialisiert; die IPv4-Adressen 192.168.2.2 und 192.168.2.141 sind separat in der Netzwerkaufnahme belegt. Originaldateien unverändert aufbewahren.
+
+### Auswertung
+
+Die vorbereitete IPv4-Referenz nach RDP-Aktivierung ist bestätigt: CL01 und ADM01 erreichen dieselben fünf TCP-Ports auf DC01. Auch CL01 erreicht TCP 3389. Nach der Segmentierung soll dieser Zugriff für CL01 blockiert und für ADM01 erhalten bleiben.
+
+Die Ergebnisse belegen weder eine erfolgreiche RDP-Anmeldung noch vollständige AD-/Dienstfunktion. Sie wurden mit einem Administratorkonto erhoben; ein Anmeldenachweis für normale Benutzer lässt sich daraus nicht ableiten. IPv6-Porttests und pfSense-Wirkungsnachweise sind nicht enthalten.
+
+### Aktualisierter Abschlussstatus
+
+- [x] DNS- und TCP-Wiederholung auf CL01 ausgewertet und mit Zeitangaben dokumentiert.
+- [x] DNS- und TCP-Wiederholung auf ADM01 ausgewertet und mit Zeitangaben dokumentiert.
+- [ ] Originaldateien beider VMs im Projektordner archiviert.
+- [ ] Hyper-V-Topologie mit Zeitangaben erneut erfasst.
+- [ ] Host-Zeitquelle geprüft.
+- [ ] Manuelle Anmeldetests mit Zeitangaben separat nachgewiesen.
+
+Diese Statusangaben aktualisieren die noch offenen Ausführungspunkte aus Abschnitt 5. Der Gesamtpunkt ist wegen der verbleibenden Nachweise noch nicht vollständig abgeschlossen.

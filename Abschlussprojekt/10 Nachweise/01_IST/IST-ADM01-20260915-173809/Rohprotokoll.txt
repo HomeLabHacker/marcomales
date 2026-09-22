@@ -1,0 +1,122 @@
+﻿**********************
+nStart der Windows PowerShell-Aufzeichnung
+Startzeit: 20260915173810
+Benutzername: PROJEKT\Administrator
+RunAs-Benutzer: PROJEKT\Administrator
+Konfigurationsname: 
+Computer: ADM01 (Microsoft Windows NT 10.0.26200.0)
+Hostanwendung: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\Users\Administrator\Desktop\IST-Nachweise.ps1
+Prozess-ID: 5524
+PSVersion: 5.1.26100.7920
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7920
+BuildVersion: 10.0.26100.7920
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Beginn: 2026-09-15T17:38:10.1314963+02:00
+ADM01
+projekt\administrator
+
+
+Id                         : W. Europe Standard Time
+DisplayName                : (UTC+01:00) Amsterdam, Berlin, Bern, Rom, Stockholm, Wien
+StandardName               : Mitteleuropäische Zeit
+DaylightName               : Mitteleuropäische Sommerzeit
+BaseUtcOffset              : 01:00:00
+SupportsDaylightSavingTime : True
+
+
+
+Sprungindikator: 0(keine Warnung)
+Stratum: 1 (Primärreferenz - synchron. über Funkuhr)
+Präzision: -23 (119.209ns pro Tick)
+Stammverzögerung: 0.0001887s
+Stammabweichung: 0.0100002s
+Referenz-ID: 0x564D5450 (Quellname:  "VMTP")
+Letzte erfolgr. Synchronisierungszeit: 15.09.2026 17:37:57
+Quelle: VM IC Time Synchronization Provider
+Abrufintervall: 10 (1024s)
+
+
+InterfaceAlias       : Ethernet
+InterfaceIndex       : 7
+InterfaceDescription : Microsoft Hyper-V Network Adapter
+NetProfile.Name      : ad.projekt.test
+IPv6Address          : 2003:c0:af2e:c315:664f:8753:5516:8bee
+IPv4Address          : 192.168.2.141
+IPv6DefaultGateway   : fe80::1
+IPv4DefaultGateway   : 192.168.2.1
+DNSServer            : fe80::1
+                       192.168.2.139
+
+
+
+
+InterfaceAlias              AddressFamily IPAddress                             PrefixLength        PrefixOrigin
+--------------              ------------- ---------                             ------------        ------------
+Ethernet                             IPv6 fe80::69d:5c88:64b2:8cc0%7                      64           WellKnown
+Ethernet                             IPv6 2003:c0:af2e:c315:a9a0:9413:3096:e70c          128 RouterAdvertisement
+Ethernet                             IPv6 2003:c0:af2e:c315:664f:8753:5516:8bee           64 RouterAdvertisement
+Loopback Pseudo-Interface 1          IPv6 ::1                                            128           WellKnown
+Ethernet                             IPv4 192.168.2.141                                   24              Manual
+Loopback Pseudo-Interface 1          IPv4 127.0.0.1                                        8           WellKnown
+
+
+
+InterfaceAlias              InterfaceIndex AddressFamily ServerAddresses
+--------------              -------------- ------------- ---------------
+Ethernet                                 7 IPv4          {192.168.2.139}
+Ethernet                                 7 IPv6          {fe80::1}
+Loopback Pseudo-Interface 1              1 IPv4          {}
+Loopback Pseudo-Interface 1              1 IPv6          {fec0:0:0:ffff::1, fec0:0:0:ffff::2, fec0:0:0:ffff::3}
+
+
+D01 Start: 2026-09-15T17:38:13.3534702+02:00
+nslookup dc01.ad.projekt.test
+Server:  DC01adprojekttest.speedport.ip
+Address:  192.168.2.139
+
+Name:    dc01.ad.projekt.test
+Addresses:  2003:c0:af2e:c315:7079:85cc:6417:e9cd
+          192.168.2.139
+D01 Ende: 2026-09-15T17:38:13.3987483+02:00
+D02 Start: 2026-09-15T17:38:13.3987483+02:00
+nslookup dc01.ad.projekt.test 192.168.2.139
+Server:  DC01adprojekttest.speedport.ip
+Address:  192.168.2.139
+
+Name:    dc01.ad.projekt.test
+Addresses:  2003:c0:af2e:c315:7079:85cc:6417:e9cd
+          192.168.2.139
+D02 Ende: 2026-09-15T17:38:13.4243982+02:00
+D03 Start: 2026-09-15T17:38:13.4243982+02:00
+nslookup -type=SRV _ldap._tcp.dc._msdcs.ad.projekt.test 192.168.2.139
+Server:  DC01adprojekttest.speedport.ip
+Address:  192.168.2.139
+
+_ldap._tcp.dc._msdcs.ad.projekt.test    SRV service location:
+          priority       = 0
+          weight         = 100
+          port           = 389
+          svr hostname   = dc01.ad.projekt.test
+dc01.ad.projekt.test    internet address = 192.168.2.139
+dc01.ad.projekt.test    AAAA IPv6 address = 2003:c0:af2e:c315:7079:85cc:6417:e9cd
+D03 Ende: 2026-09-15T17:38:13.4469133+02:00
+
+TestId   Start                             End                               SourceComputer SourceAddress
+------   -----                             ---                               -------------- -------------
+TCP-53   2026-09-15T17:38:13.4489201+02:00 2026-09-15T17:38:15.0878931+02:00 ADM01          MSFT_NetIPAddress (Name = ";C?8;@B8?8;?;55A55;55;", CreationClassName = ...
+TCP-88   2026-09-15T17:38:15.0919022+02:00 2026-09-15T17:38:15.6190760+02:00 ADM01          MSFT_NetIPAddress (Name = ";C?8;@B8?8;?;55A55;55;", CreationClassName = ...
+TCP-389  2026-09-15T17:38:15.6190760+02:00 2026-09-15T17:38:16.1390989+02:00 ADM01          MSFT_NetIPAddress (Name = ";C?8;@B8?8;?;55A55;55;", CreationClassName = ...
+TCP-445  2026-09-15T17:38:16.1390989+02:00 2026-09-15T17:38:16.6970714+02:00 ADM01          MSFT_NetIPAddress (Name = ";C?8;@B8?8;?;55A55;55;", CreationClassName = ...
+TCP-3389 2026-09-15T17:38:16.6970714+02:00 2026-09-15T17:38:17.2299356+02:00 ADM01          MSFT_NetIPAddress (Name = ";C?8;@B8?8;?;55A55;55;", CreationClassName = ...
+
+
+Ende: 2026-09-15T17:38:17.3018091+02:00
+**********************
+Ende der Windows PowerShell-Aufzeichnung
+Endzeit: 20260915173817
+**********************

@@ -1,0 +1,40 @@
+﻿DNS-Nachweis – erneute Erhebung
+Beginn: 2026-09-15T19:41:55.5513737+02:00
+Rechner: CL01
+Benutzer: projekt\administrator
+D01 – Standard-DNS
+Start: 2026-09-15T19:41:55.7299832+02:00
+Server:  DC01adprojekttest.speedport.ip
+Address:  192.168.2.139
+
+Name:    dc01.ad.projekt.test
+Addresses:  2003:c0:af2e:c315:7079:85cc:6417:e9cd
+	  2003:c0:af2e:c3ac:4b:f5c2:337a:4ec1
+	  192.168.2.139
+
+Ende: 2026-09-15T19:41:55.8780716+02:00
+D02 – Explizite Anfrage an DC01
+Start: 2026-09-15T19:41:55.8780716+02:00
+Server:  DC01adprojekttest.speedport.ip
+Address:  192.168.2.139
+
+Name:    dc01.ad.projekt.test
+Addresses:  2003:c0:af2e:c3ac:4b:f5c2:337a:4ec1
+	  2003:c0:af2e:c315:7079:85cc:6417:e9cd
+	  192.168.2.139
+
+Ende: 2026-09-15T19:41:55.9460021+02:00
+D03 – AD-SRV-Eintrag
+Start: 2026-09-15T19:41:55.9460021+02:00
+Server:  DC01adprojekttest.speedport.ip
+Address:  192.168.2.139
+
+_ldap._tcp.dc._msdcs.ad.projekt.test	SRV service location:
+	  priority       = 0
+	  weight         = 100
+	  port           = 389
+	  svr hostname   = dc01.ad.projekt.test
+dc01.ad.projekt.test	internet address = 192.168.2.139
+dc01.ad.projekt.test	AAAA IPv6 address = 2003:c0:af2e:c315:7079:85cc:6417:e9cd
+dc01.ad.projekt.test	AAAA IPv6 address = 2003:c0:af2e:c3ac:4b:f5c2:337a:4ec1
+Ende: 2026-09-15T19:41:56.0341394+02:00

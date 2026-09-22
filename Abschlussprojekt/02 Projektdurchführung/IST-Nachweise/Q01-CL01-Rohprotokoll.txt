@@ -1,0 +1,95 @@
+﻿**********************
+nStart der Windows PowerShell-Aufzeichnung
+Startzeit: 20260915173331
+Benutzername: PROJEKT\Administrator
+RunAs-Benutzer: PROJEKT\Administrator
+Konfigurationsname: 
+Computer: CL01 (Microsoft Windows NT 10.0.26200.0)
+Hostanwendung: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\Users\Administrator\Desktop\IST-Nachweise.ps1
+Prozess-ID: 15612
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Beginn: 2026-09-15T17:33:31.0247364+02:00
+
+
+
+
+Id                         : W. Europe Standard Time
+DisplayName                : (UTC+01:00) Amsterdam, Berlin, Bern, Rom, Stockholm, Wien
+StandardName               : Mitteleuropäische Zeit
+DaylightName               : Mitteleuropäische Sommerzeit
+BaseUtcOffset              : 01:00:00
+SupportsDaylightSavingTime : True
+
+
+
+
+
+
+InterfaceAlias       : Ethernet
+InterfaceIndex       : 6
+InterfaceDescription : Microsoft Hyper-V Network Adapter
+NetProfile.Name      : ad.projekt.test
+IPv6Address          : 2003:c0:af2e:c315:ea64:76c5:7f02:6b3b
+IPv4Address          : 192.168.2.2
+IPv6DefaultGateway   : fe80::1
+IPv4DefaultGateway   : 192.168.2.1
+DNSServer            : fe80::1
+                       192.168.2.139
+
+
+
+
+InterfaceAlias              AddressFamily IPAddress                             PrefixLength        PrefixOrigin
+--------------              ------------- ---------                             ------------        ------------
+Ethernet                             IPv6 fe80::624f:2dda:6324:784%6                      64           WellKnown
+Ethernet                             IPv6 2003:c0:af2e:c315:ea64:76c5:7f02:6b3b           64 RouterAdvertisement
+Ethernet                             IPv6 2003:c0:af2e:c315:c1f9:90ef:eeae:eada          128 RouterAdvertisement
+Loopback Pseudo-Interface 1          IPv6 ::1                                            128           WellKnown
+Ethernet                             IPv4 192.168.2.2                                     24              Manual
+Loopback Pseudo-Interface 1          IPv4 127.0.0.1                                        8           WellKnown
+
+
+
+InterfaceAlias              InterfaceIndex AddressFamily ServerAddresses
+--------------              -------------- ------------- ---------------
+Ethernet                                 6 IPv4          {192.168.2.139}
+Ethernet                                 6 IPv6          {fe80::1}
+Loopback Pseudo-Interface 1              1 IPv4          {}
+Loopback Pseudo-Interface 1              1 IPv6          {fec0:0:0:ffff::1, fec0:0:0:ffff::2, fec0:0:0:ffff::3}
+
+
+D01 Start: 2026-09-15T17:33:34.0578373+02:00
+nslookup dc01.ad.projekt.test
+
+D01 Ende: 2026-09-15T17:33:34.1320452+02:00
+D02 Start: 2026-09-15T17:33:34.1320452+02:00
+nslookup dc01.ad.projekt.test 192.168.2.139
+
+D02 Ende: 2026-09-15T17:33:34.1605021+02:00
+D03 Start: 2026-09-15T17:33:34.1605021+02:00
+nslookup -type=SRV _ldap._tcp.dc._msdcs.ad.projekt.test 192.168.2.139
+
+D03 Ende: 2026-09-15T17:33:34.2121808+02:00
+
+TestId   Start                             End                               SourceComputer SourceAddress
+------   -----                             ---                               -------------- -------------
+TCP-53   2026-09-15T17:33:34.2121808+02:00 2026-09-15T17:33:35.7696951+02:00 CL01           MSFT_NetIPAddress (Name ...
+TCP-88   2026-09-15T17:33:35.7743453+02:00 2026-09-15T17:33:36.2975788+02:00 CL01           MSFT_NetIPAddress (Name ...
+TCP-389  2026-09-15T17:33:36.2975788+02:00 2026-09-15T17:33:36.8077573+02:00 CL01           MSFT_NetIPAddress (Name ...
+TCP-445  2026-09-15T17:33:36.8077573+02:00 2026-09-15T17:33:37.2765280+02:00 CL01           MSFT_NetIPAddress (Name ...
+TCP-3389 2026-09-15T17:33:37.2765280+02:00 2026-09-15T17:33:37.7468689+02:00 CL01           MSFT_NetIPAddress (Name ...
+
+
+Ende: 2026-09-15T17:33:37.7847550+02:00
+**********************
+Ende der Windows PowerShell-Aufzeichnung
+Endzeit: 20260915173337
+**********************

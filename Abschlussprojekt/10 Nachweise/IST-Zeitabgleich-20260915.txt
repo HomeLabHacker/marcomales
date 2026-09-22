@@ -1,0 +1,11 @@
+2026-09-15T17:48:51.2134629+02:00
+Sprungindikator: 0(keine Warnung)
+Stratum: 5 (Sekundärreferenz - synchr. über (S)NTP)
+Präzision: -23 (119.209ns pro Tick)
+Stammverzögerung: 0.0207382s
+Stammabweichung: 7.9698434s
+Referenz-ID: 0x14653909 (Quell-IP:  20.101.57.9)
+Letzte erfolgr. Synchronisierungszeit: 15.09.2026 17:48:27
+Quelle: time.windows.com,0x9 
+Abrufintervall: 10 (1024s)
+

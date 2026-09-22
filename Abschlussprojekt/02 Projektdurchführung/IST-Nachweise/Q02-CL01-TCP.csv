@@ -1,0 +1,6 @@
+﻿"TestId";"Start";"End";"SourceComputer";"SourceAddress";"Destination";"Port";"TcpTestSucceeded";"Error"
+"TCP-53";"2026-09-15T17:33:34.2121808+02:00";"2026-09-15T17:33:35.7696951+02:00";"CL01";"MSFT_NetIPAddress (Name = "";C?8;@B8?8?55@55;55;"", CreationClassName = """", SystemCreationClassName = """", SystemName = """")";"192.168.2.139";"53";"True";""
+"TCP-88";"2026-09-15T17:33:35.7743453+02:00";"2026-09-15T17:33:36.2975788+02:00";"CL01";"MSFT_NetIPAddress (Name = "";C?8;@B8?8?55@55;55;"", CreationClassName = """", SystemCreationClassName = """", SystemName = """")";"192.168.2.139";"88";"True";""
+"TCP-389";"2026-09-15T17:33:36.2975788+02:00";"2026-09-15T17:33:36.8077573+02:00";"CL01";"MSFT_NetIPAddress (Name = "";C?8;@B8?8?55@55;55;"", CreationClassName = """", SystemCreationClassName = """", SystemName = """")";"192.168.2.139";"389";"True";""
+"TCP-445";"2026-09-15T17:33:36.8077573+02:00";"2026-09-15T17:33:37.2765280+02:00";"CL01";"MSFT_NetIPAddress (Name = "";C?8;@B8?8?55@55;55;"", CreationClassName = """", SystemCreationClassName = """", SystemName = """")";"192.168.2.139";"445";"True";""
+"TCP-3389";"2026-09-15T17:33:37.2765280+02:00";"2026-09-15T17:33:37.7468689+02:00";"CL01";"MSFT_NetIPAddress (Name = "";C?8;@B8?8?55@55;55;"", CreationClassName = """", SystemCreationClassName = """", SystemName = """")";"192.168.2.139";"3389";"True";""

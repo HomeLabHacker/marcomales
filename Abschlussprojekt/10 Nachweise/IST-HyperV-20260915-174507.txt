@@ -1,0 +1,68 @@
+﻿**********************
+nStart der Windows PowerShell-Aufzeichnung
+Startzeit: 20260915174507
+Benutzername: MALES-IT\MMale
+RunAs-Benutzer: MALES-IT\MMale
+Konfigurationsname: 
+Computer: MALES-IT (Microsoft Windows NT 10.0.26200.0)
+Hostanwendung: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+Prozess-ID: 26968
+PSVersion: 5.1.26100.9444
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9444
+BuildVersion: 10.0.26100.9444
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Die Aufzeichnung wurde gestartet. Die Ausgabedatei ist "C:\Users\MMale\OneDrive\Dokumente\IST-HyperV-20260915-174507.txt".
+PS C:\WINDOWS\system32> [DateTimeOffset]::Now.ToString('o')
+2026-09-15T17:45:07.7615996+02:00
+PS C:\WINDOWS\system32> hostname
+Males-IT
+PS C:\WINDOWS\system32> w32tm /query /status
+Folgender Fehler ist aufgetreten: Der Dienst wurde nicht gestartet. (0x80070426)
+PS C:\WINDOWS\system32> Get-VMSwitch |
+    Select-Object Name, SwitchType, NetAdapterInterfaceDescription |
+    Format-Table -AutoSize
+
+Name           SwitchType NetAdapterInterfaceDescription
+----           ---------- ------------------------------
+vSW-IST-LAN      External ASIX USB to Gigabit Ethernet Family Adapter
+vSW-Client        Private
+vSW-Server        Private
+Default Switch   Internal
+
+
+PS C:\WINDOWS\system32> Get-VMNetworkAdapter -VMName * |
+    Select-Object VMName, Name, SwitchName, Status |
+    Format-Table -AutoSize
+
+VMName        Name          SwitchName  Status
+------        ----          ----------  ------
+Client (CL01) Netzwerkkarte vSW-IST-LAN {Ok}
+Admin(ADM01)  Netzwerkkarte vSW-IST-LAN {Ok}
+pfsense       Netzwerkkarte
+Server(DC01)  Netzwerkkarte             {Ok}
+Server(DC01)  Netzwerkkarte vSW-IST-LAN {Ok}
+
+
+PS C:\WINDOWS\system32> Get-VMNetworkAdapterVlan -VMName *
+
+VMName        VMNetworkAdapterName Mode     VlanList
+------        -------------------- ----     --------
+Client (CL01) Netzwerkkarte        Untagged
+Admin(ADM01)  Netzwerkkarte        Untagged
+pfsense       Netzwerkkarte        Untagged
+Server(DC01)  Netzwerkkarte        Untagged
+Server(DC01)  Netzwerkkarte        Untagged
+
+
+PS C:\WINDOWS\system32> [DateTimeOffset]::Now.ToString('o')
+2026-09-15T17:45:16.0850071+02:00
+PS C:\WINDOWS\system32> Stop-Transcript
+**********************
+Ende der Windows PowerShell-Aufzeichnung
+Endzeit: 20260915174516
+**********************
